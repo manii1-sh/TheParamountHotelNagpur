@@ -31,17 +31,17 @@ import { ContactSection } from "@/routes/contact";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "The Paramount Hotel Nagpur — Luxury Hotel in Besa" },
+      { title: "The Paramount Hotel Nagpur — Luxury Hotel in Manish Nagar" },
       {
         name: "description",
         content:
-          "Experience 5-star comfort at The Paramount Hotel near Besa, Nagpur Airport, and MIHAN. Book premium rooms directly via WhatsApp for the best prices.",
+          "Experience 5-star comfort at The Paramount Hotel near Manish Nagar, Nagpur Airport, and MIHAN. Book premium rooms directly via WhatsApp for the best prices.",
       },
-      { property: "og:title", content: "The Paramount Hotel Nagpur — Luxury Hotel in Besa" },
+      { property: "og:title", content: "The Paramount Hotel Nagpur — Luxury Hotel in Manish Nagar" },
       {
         property: "og:description",
         content:
-          "Experience 5-star comfort at The Paramount Hotel near Besa, Nagpur Airport, and MIHAN. Book premium rooms directly via WhatsApp.",
+          "Experience 5-star comfort at The Paramount Hotel near Manish Nagar, Nagpur Airport, and MIHAN. Book premium rooms directly via WhatsApp.",
       },
       {
         property: "og:image",
@@ -177,8 +177,10 @@ function Index() {
   const [isBookingOpen, setIsBookingOpen] = useState(false);
 
   // Booking Form State
+  const [stayDuration, setStayDuration] = useState("Full Day");
   const [checkIn, setCheckIn] = useState("");
   const [checkOut, setCheckOut] = useState("");
+  const [checkInTime, setCheckInTime] = useState("12:00");
   const [roomType, setRoomType] = useState("Any Room Type");
   const [guests, setGuests] = useState("2 Guests");
   const [mobile, setMobile] = useState("");
@@ -198,13 +200,14 @@ function Index() {
     e.preventDefault();
     setValidationError("");
 
-    if (!checkIn || !checkOut || !mobile) {
+    const isHourly = stayDuration === "6 Hours" || stayDuration === "12 Hours";
+
+    if (!checkIn || !mobile || (isHourly ? !checkInTime : !checkOut)) {
       setValidationError("Please fill out all fields.");
       return;
     }
 
     const checkInDate = new Date(checkIn);
-    const checkOutDate = new Date(checkOut);
     const today = new Date();
     today.setHours(0, 0, 0, 0);
 
@@ -213,18 +216,28 @@ function Index() {
       return;
     }
 
-    if (checkOutDate <= checkInDate) {
-      setValidationError("Check-Out must be after Check-In.");
-      return;
+    if (!isHourly) {
+      const checkOutDate = new Date(checkOut);
+      if (checkOutDate <= checkInDate) {
+        setValidationError("Check-Out must be after Check-In.");
+        return;
+      }
+    }
+
+    let dateDetails = `Check-In Date: ${checkIn}`;
+    if (isHourly) {
+      dateDetails += `\nCheck-In Time: ${checkInTime}`;
+    } else {
+      dateDetails += `\nCheck-Out Date: ${checkOut}`;
     }
 
     // Prepare WhatsApp Message
     const text = `Hello Paramount Hotel,
 
-I would like to check room availability.
-Check-In: ${checkIn}
-Check-Out: ${checkOut}
+I would like to check room availability:
+Duration: ${stayDuration}
 Room Type: ${roomType}
+${dateDetails}
 Guests: ${guests}
 Mobile Number: ${mobile}
 
@@ -249,7 +262,7 @@ Please share available room options.`;
         <div className="absolute inset-0">
           <img
             src="/hotel-firstpage.webp"
-            alt="The Paramount Hotel — Besa, Nagpur"
+            alt="The Paramount Hotel — Manish Nagar, Nagpur"
             className="w-full h-full object-cover object-center"
           />
           {/* Heavy left gradient so text is readable */}
@@ -355,40 +368,26 @@ Please share available room options.`;
                     onSubmit={handleBookingSubmit}
                     className="bg-[#FDFBF7] rounded-xl p-4 space-y-3 shadow-sm border border-gray-100"
                   >
-                    {/* Row 1: Check-In & Check-Out */}
+                    {/* Row 1: Duration & Room Type */}
                     <div className="grid grid-cols-2 gap-3">
                       <div className="space-y-1">
                         <label className="flex items-center gap-1.5 text-[10px] uppercase tracking-wider font-bold text-[#040E21]/80 select-none">
-                          <Calendar className="w-3.5 h-3.5 text-[#040E21]/60" />
-                          <span>Check-In</span>
+                          <Clock className="w-3.5 h-3.5 text-[#040E21]/60" />
+                          <span>Duration</span>
                         </label>
-                        <input
-                          type="date"
-                          value={checkIn}
-                          onChange={(e) => setCheckIn(e.target.value)}
-                          required
-                          min={new Date().toISOString().split("T")[0]}
-                          className="w-full bg-white border border-[#E2E8F0] focus:border-[#E5B83E] focus:ring-1 focus:ring-[#E5B83E] rounded-lg py-1.5 px-2.5 text-xs font-semibold text-[#040E21] outline-none transition-all cursor-pointer"
-                        />
+                        <div className="relative">
+                          <select
+                            value={stayDuration}
+                            onChange={(e) => setStayDuration(e.target.value)}
+                            className="w-full bg-white border border-[#E2E8F0] focus:border-[#E5B83E] rounded-lg py-1.5 pl-2.5 pr-8 text-xs font-semibold text-[#040E21] outline-none transition-all cursor-pointer appearance-none font-sans"
+                          >
+                            <option value="Full Day">Full Day</option>
+                            <option value="6 Hours">6 Hours</option>
+                            <option value="12 Hours">12 Hours</option>
+                          </select>
+                          <ChevronDown className="absolute right-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-[#040E21]/50 pointer-events-none" />
+                        </div>
                       </div>
-                      <div className="space-y-1">
-                        <label className="flex items-center gap-1.5 text-[10px] uppercase tracking-wider font-bold text-[#040E21]/80 select-none">
-                          <Calendar className="w-3.5 h-3.5 text-[#040E21]/60" />
-                          <span>Check-Out</span>
-                        </label>
-                        <input
-                          type="date"
-                          value={checkOut}
-                          onChange={(e) => setCheckOut(e.target.value)}
-                          required
-                          min={checkIn || new Date().toISOString().split("T")[0]}
-                          className="w-full bg-white border border-[#E2E8F0] focus:border-[#E5B83E] focus:ring-1 focus:ring-[#E5B83E] rounded-lg py-1.5 px-2.5 text-xs font-semibold text-[#040E21] outline-none transition-all cursor-pointer"
-                        />
-                      </div>
-                    </div>
-
-                    {/* Row 2: Room Type & Guests */}
-                    <div className="grid grid-cols-2 gap-3">
                       <div className="space-y-1">
                         <label className="flex items-center gap-1.5 text-[10px] uppercase tracking-wider font-bold text-[#040E21]/80 select-none">
                           <BedDouble className="w-3.5 h-3.5 text-[#040E21]/60" />
@@ -409,6 +408,58 @@ Please share available room options.`;
                           <ChevronDown className="absolute right-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-[#040E21]/50 pointer-events-none" />
                         </div>
                       </div>
+                    </div>
+
+                    {/* Row 2: Check-In Date & Check-Out Date / Time */}
+                    <div className="grid grid-cols-2 gap-3">
+                      <div className="space-y-1">
+                        <label className="flex items-center gap-1.5 text-[10px] uppercase tracking-wider font-bold text-[#040E21]/80 select-none">
+                          <Calendar className="w-3.5 h-3.5 text-[#040E21]/60" />
+                          <span>Check-In</span>
+                        </label>
+                        <input
+                          type="date"
+                          value={checkIn}
+                          onChange={(e) => setCheckIn(e.target.value)}
+                          required
+                          min={new Date().toISOString().split("T")[0]}
+                          className="w-full bg-white border border-[#E2E8F0] focus:border-[#E5B83E] focus:ring-1 focus:ring-[#E5B83E] rounded-lg py-1.5 px-2.5 text-xs font-semibold text-[#040E21] outline-none transition-all cursor-pointer"
+                        />
+                      </div>
+                      {stayDuration === "6 Hours" || stayDuration === "12 Hours" ? (
+                        <div className="space-y-1">
+                          <label className="flex items-center gap-1.5 text-[10px] uppercase tracking-wider font-bold text-[#040E21]/80 select-none">
+                            <Clock className="w-3.5 h-3.5 text-[#040E21]/60" />
+                            <span>Arrival Time</span>
+                          </label>
+                          <input
+                            type="time"
+                            value={checkInTime}
+                            onChange={(e) => setCheckInTime(e.target.value)}
+                            required
+                            className="w-full bg-white border border-[#E2E8F0] focus:border-[#E5B83E] focus:ring-1 focus:ring-[#E5B83E] rounded-lg py-1.5 px-2.5 text-xs font-semibold text-[#040E21] outline-none transition-all cursor-pointer"
+                          />
+                        </div>
+                      ) : (
+                        <div className="space-y-1">
+                          <label className="flex items-center gap-1.5 text-[10px] uppercase tracking-wider font-bold text-[#040E21]/80 select-none">
+                            <Calendar className="w-3.5 h-3.5 text-[#040E21]/60" />
+                            <span>Check-Out</span>
+                          </label>
+                          <input
+                            type="date"
+                            value={checkOut}
+                            onChange={(e) => setCheckOut(e.target.value)}
+                            required
+                            min={checkIn || new Date().toISOString().split("T")[0]}
+                            className="w-full bg-white border border-[#E2E8F0] focus:border-[#E5B83E] focus:ring-1 focus:ring-[#E5B83E] rounded-lg py-1.5 px-2.5 text-xs font-semibold text-[#040E21] outline-none transition-all cursor-pointer"
+                          />
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Row 3: Guests & Mobile */}
+                    <div className="grid grid-cols-2 gap-3">
                       <div className="space-y-1">
                         <label className="flex items-center gap-1.5 text-[10px] uppercase tracking-wider font-bold text-[#040E21]/80 select-none">
                           <Users className="w-3.5 h-3.5 text-[#040E21]/60" />
@@ -429,22 +480,20 @@ Please share available room options.`;
                           <ChevronDown className="absolute right-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-[#040E21]/50 pointer-events-none" />
                         </div>
                       </div>
-                    </div>
-
-                    {/* Row 3: Mobile */}
-                    <div className="space-y-1">
-                      <label className="flex items-center gap-1.5 text-[10px] uppercase tracking-wider font-bold text-[#040E21]/80 select-none">
-                        <Smartphone className="w-3.5 h-3.5 text-[#040E21]/60" />
-                        <span>Your Mobile Number</span>
-                      </label>
-                      <input
-                        type="tel"
-                        placeholder="+91 98765 43210"
-                        value={mobile}
-                        onChange={(e) => setMobile(e.target.value)}
-                        required
-                        className="w-full bg-white border border-[#E2E8F0] focus:border-[#E5B83E] focus:ring-1 focus:ring-[#E5B83E] rounded-lg py-1.5 px-2.5 text-xs font-semibold text-[#040E21] placeholder:text-[#040E21]/30 outline-none transition-all"
-                      />
+                      <div className="space-y-1">
+                        <label className="flex items-center gap-1.5 text-[10px] uppercase tracking-wider font-bold text-[#040E21]/80 select-none">
+                          <Smartphone className="w-3.5 h-3.5 text-[#040E21]/60" />
+                          <span>Mobile No</span>
+                        </label>
+                        <input
+                          type="tel"
+                          placeholder="+91 98765..."
+                          value={mobile}
+                          onChange={(e) => setMobile(e.target.value)}
+                          required
+                          className="w-full bg-white border border-[#E2E8F0] focus:border-[#E5B83E] focus:ring-1 focus:ring-[#E5B83E] rounded-lg py-1.5 px-2.5 text-xs font-semibold text-[#040E21] placeholder:text-[#040E21]/30 outline-none transition-all"
+                        />
+                      </div>
                     </div>
 
                     {/* Submit */}
@@ -490,7 +539,7 @@ Please share available room options.`;
               <MapPin className="w-8 h-8 text-[#E5B83E] shrink-0" />
               <div>
                 <h4 className="font-serif font-bold text-sm text-[#FAFAFA] tracking-wide">
-                  Prime Besa Location
+                  Prime Manish Nagar Location
                 </h4>
                 <p className="text-xs text-[#FAFAFA]/75 mt-0.5">Heart of Nagpur</p>
               </div>
@@ -678,40 +727,26 @@ Please share available room options.`;
               onSubmit={handleBookingSubmit}
               className="bg-[#FDFBF7] rounded-xl p-4 space-y-3.5 shadow-sm border border-gray-100 text-left"
             >
-              {/* Row 1: Check-In & Check-Out */}
+              {/* Row 1: Duration & Room Type */}
               <div className="grid grid-cols-2 gap-3">
                 <div className="space-y-1">
                   <label className="flex items-center gap-1 text-[10px] uppercase tracking-wider font-bold text-[#040E21]/80 select-none">
-                    <Calendar className="w-3.5 h-3.5 text-[#040E21]/60" />
-                    <span>Check-In</span>
+                    <Clock className="w-3.5 h-3.5 text-[#040E21]/60" />
+                    <span>Duration</span>
                   </label>
-                  <input
-                    type="date"
-                    value={checkIn}
-                    onChange={(e) => setCheckIn(e.target.value)}
-                    required
-                    min={new Date().toISOString().split("T")[0]}
-                    className="w-full bg-white border border-[#E2E8F0] focus:border-[#E5B83E] rounded-lg py-1.5 px-2.5 text-xs font-semibold text-[#040E21] outline-none"
-                  />
+                  <div className="relative">
+                    <select
+                      value={stayDuration}
+                      onChange={(e) => setStayDuration(e.target.value)}
+                      className="w-full bg-white border border-[#E2E8F0] focus:border-[#E5B83E] rounded-lg py-1.5 pl-2.5 pr-8 text-xs font-semibold text-[#040E21] outline-none appearance-none font-sans cursor-pointer"
+                    >
+                      <option value="Full Day">Full Day</option>
+                      <option value="6 Hours">6 Hours</option>
+                      <option value="12 Hours">12 Hours</option>
+                    </select>
+                    <ChevronDown className="absolute right-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-[#040E21]/50 pointer-events-none" />
+                  </div>
                 </div>
-                <div className="space-y-1">
-                  <label className="flex items-center gap-1 text-[10px] uppercase tracking-wider font-bold text-[#040E21]/80 select-none">
-                    <Calendar className="w-3.5 h-3.5 text-[#040E21]/60" />
-                    <span>Check-Out</span>
-                  </label>
-                  <input
-                    type="date"
-                    value={checkOut}
-                    onChange={(e) => setCheckOut(e.target.value)}
-                    required
-                    min={checkIn || new Date().toISOString().split("T")[0]}
-                    className="w-full bg-white border border-[#E2E8F0] focus:border-[#E5B83E] rounded-lg py-1.5 px-2.5 text-xs font-semibold text-[#040E21] outline-none"
-                  />
-                </div>
-              </div>
-
-              {/* Row 2: Room Type & Guests */}
-              <div className="grid grid-cols-2 gap-3">
                 <div className="space-y-1">
                   <label className="flex items-center gap-1 text-[10px] uppercase tracking-wider font-bold text-[#040E21]/80 select-none">
                     <BedDouble className="w-3.5 h-3.5 text-[#040E21]/60" />
@@ -732,6 +767,58 @@ Please share available room options.`;
                     <ChevronDown className="absolute right-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-[#040E21]/50 pointer-events-none" />
                   </div>
                 </div>
+              </div>
+
+              {/* Row 2: Check-In Date & Check-Out Date / Time */}
+              <div className="grid grid-cols-2 gap-3">
+                <div className="space-y-1">
+                  <label className="flex items-center gap-1 text-[10px] uppercase tracking-wider font-bold text-[#040E21]/80 select-none">
+                    <Calendar className="w-3.5 h-3.5 text-[#040E21]/60" />
+                    <span>Check-In</span>
+                  </label>
+                  <input
+                    type="date"
+                    value={checkIn}
+                    onChange={(e) => setCheckIn(e.target.value)}
+                    required
+                    min={new Date().toISOString().split("T")[0]}
+                    className="w-full bg-white border border-[#E2E8F0] focus:border-[#E5B83E] rounded-lg py-1.5 px-2.5 text-xs font-semibold text-[#040E21] outline-none cursor-pointer"
+                  />
+                </div>
+                {stayDuration === "6 Hours" || stayDuration === "12 Hours" ? (
+                  <div className="space-y-1">
+                    <label className="flex items-center gap-1 text-[10px] uppercase tracking-wider font-bold text-[#040E21]/80 select-none">
+                      <Clock className="w-3.5 h-3.5 text-[#040E21]/60" />
+                      <span>Arrival Time</span>
+                    </label>
+                    <input
+                      type="time"
+                      value={checkInTime}
+                      onChange={(e) => setCheckInTime(e.target.value)}
+                      required
+                      className="w-full bg-white border border-[#E2E8F0] focus:border-[#E5B83E] rounded-lg py-1.5 px-2.5 text-xs font-semibold text-[#040E21] outline-none cursor-pointer"
+                    />
+                  </div>
+                ) : (
+                  <div className="space-y-1">
+                    <label className="flex items-center gap-1 text-[10px] uppercase tracking-wider font-bold text-[#040E21]/80 select-none">
+                      <Calendar className="w-3.5 h-3.5 text-[#040E21]/60" />
+                      <span>Check-Out</span>
+                    </label>
+                    <input
+                      type="date"
+                      value={checkOut}
+                      onChange={(e) => setCheckOut(e.target.value)}
+                      required
+                      min={checkIn || new Date().toISOString().split("T")[0]}
+                      className="w-full bg-white border border-[#E2E8F0] focus:border-[#E5B83E] rounded-lg py-1.5 px-2.5 text-xs font-semibold text-[#040E21] outline-none cursor-pointer"
+                    />
+                  </div>
+                )}
+              </div>
+
+              {/* Row 3: Guests & Mobile */}
+              <div className="grid grid-cols-2 gap-3">
                 <div className="space-y-1">
                   <label className="flex items-center gap-1 text-[10px] uppercase tracking-wider font-bold text-[#040E21]/80 select-none">
                     <Users className="w-3.5 h-3.5 text-[#040E21]/60" />
@@ -752,22 +839,20 @@ Please share available room options.`;
                     <ChevronDown className="absolute right-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-[#040E21]/50 pointer-events-none" />
                   </div>
                 </div>
-              </div>
-
-              {/* Row 3: Mobile Number */}
-              <div className="space-y-1">
-                <label className="flex items-center gap-1 text-[10px] uppercase tracking-wider font-bold text-[#040E21]/80 select-none">
-                  <Smartphone className="w-3.5 h-3.5 text-[#040E21]/60" />
-                  <span>Your Mobile Number</span>
-                </label>
-                <input
-                  type="tel"
-                  placeholder="+91 98765 43210"
-                  value={mobile}
-                  onChange={(e) => setMobile(e.target.value)}
-                  required
-                  className="w-full bg-white border border-[#E2E8F0] focus:border-[#E5B83E] rounded-lg py-1.5 px-2.5 text-xs font-semibold text-[#040E21] placeholder:text-[#040E21]/30 outline-none"
-                />
+                <div className="space-y-1">
+                  <label className="flex items-center gap-1 text-[10px] uppercase tracking-wider font-bold text-[#040E21]/80 select-none">
+                    <Smartphone className="w-3.5 h-3.5 text-[#040E21]/60" />
+                    <span>Mobile No</span>
+                  </label>
+                  <input
+                    type="tel"
+                    placeholder="+91 98765..."
+                    value={mobile}
+                    onChange={(e) => setMobile(e.target.value)}
+                    required
+                    className="w-full bg-white border border-[#E2E8F0] focus:border-[#E5B83E] rounded-lg py-1.5 px-2.5 text-xs font-semibold text-[#040E21] placeholder:text-[#040E21]/30 outline-none"
+                  />
+                </div>
               </div>
 
               {/* Submit Button */}

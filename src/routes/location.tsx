@@ -54,7 +54,7 @@ const FEATURES = [
 ];
 
 const TRUST = [
-  { icon: MapPin,        title: "Prime Besa Location", desc: "Heart of Nagpur" },
+  { icon: MapPin,        title: "Prime Manish Nagar Location", desc: "Heart of Nagpur" },
   { icon: ShieldCheck,   title: "Safe & Secure Area",  desc: "Peace of mind for you and your family" },
   { icon: Headphones,    title: "24/7 Guest Support",  desc: "We're always here whenever you need" },
   { icon: BadgePercent,  title: "Best Price Guarantee",desc: "Book direct & save more" },
@@ -111,7 +111,7 @@ function LocationPage() {
           <div className="relative min-h-[340px] lg:min-h-[520px] overflow-hidden">
             <img
               src="/hotel-exterior.webp"
-              alt="The Paramount Hotel, Besa Nagpur"
+              alt="The Paramount Hotel, Manish Nagar Nagpur"
               className="absolute inset-0 w-full h-full object-cover object-center"
             />
             {/* All-direction fades to blend into cream bg */}

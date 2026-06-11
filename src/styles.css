@@ -249,24 +249,36 @@
 
 /* ── Marquee / review ticker ─────────────────────────────────────────────── */
 @keyframes marquee-left {
-  0%   { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
+  0%   { transform: translate3d(0, 0, 0); }
+  100% { transform: translate3d(-50%, 0, 0); }
 }
 
 @keyframes marquee-right {
-  0%   { transform: translateX(-50%); }
-  100% { transform: translateX(0); }
+  0%   { transform: translate3d(-50%, 0, 0); }
+  100% { transform: translate3d(0, 0, 0); }
 }
 
 .animate-marquee-left {
   animation: marquee-left 35s linear infinite;
+  will-change: transform;
 }
 
 .animate-marquee-right {
   animation: marquee-right 40s linear infinite;
+  will-change: transform;
 }
 
 .marquee-track:hover .animate-marquee-left,
 .marquee-track:hover .animate-marquee-right {
   animation-play-state: paused;
+}
+
+/* Speed up marquee on mobile so it doesn't feel sluggish or lag on touch screens */
+@media (max-width: 768px) {
+  .animate-marquee-left {
+    animation-duration: 20s;
+  }
+  .animate-marquee-right {
+    animation-duration: 22s;
+  }
 }

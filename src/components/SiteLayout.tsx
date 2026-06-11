@@ -176,7 +176,7 @@ export function SiteLayout({ children }: { children: ReactNode }) {
           <div className="space-y-3">
             <div>
               <p className="font-serif font-bold text-sm tracking-[0.12em] text-[#E5B83E]">THE PARAMOUNT HOTEL</p>
-              <p className="text-white/40 text-xs font-sans mt-0.5">Besa, Nagpur — 440037</p>
+              <p className="text-white/40 text-xs font-sans mt-0.5">Manish Nagar, Besa, Nagpur — 440037</p>
             </div>
             <p className="text-white/45 text-xs leading-relaxed max-w-xs">
               Comfortable stays &amp; trusted hospitality in the heart of Nagpur.
@@ -220,7 +220,7 @@ export function SiteLayout({ children }: { children: ReactNode }) {
             <p className="font-serif font-bold text-xs text-white tracking-wide uppercase">Contact</p>
             <div className="w-6 h-px bg-[#E5B83E]/40"></div>
             <ul className="space-y-2 text-xs text-white/45">
-              <li>📍 Plot No. 30, Beltarodi Road, Besa, Nagpur</li>
+              <li>📍 Plot No. 30, Beltarodi Road, Manish Nagar, Besa, Nagpur</li>
               <li><a href="tel:+919322520682" className="hover:text-[#E5B83E] transition-colors">📞 +91 93225 20682</a></li>
               <li>🕐 Check-in 12 PM · Check-out 11 AM</li>
               <li>⭐ 4.8 · 178+ Google Reviews</li>

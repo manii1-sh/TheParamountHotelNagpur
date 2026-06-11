@@ -28,17 +28,26 @@ const PHOTOS: Record<Exclude<Tab, "All">, Photo[]> = {
   Rooms: [
     { src: "/dulex-room.webp",    alt: "Deluxe Room — King Bed",         span: "wide" },
     { src: "/super-duplex.webp",  alt: "Super Deluxe Room — King Bed",   span: "tall" },
-    { src: "/premium-room.webp",  alt: "Premium Room — Bathtub Suite"               },
+    { src: "/premium-room.png",   alt: "Premium Room — Bathtub Suite"               },
     { src: "/extraspace.webp",   alt: "Room — Extra Space & Comfort"               },
     { src: "/decoration.webp",    alt: "Room — Premium Décor",           span: "wide" },
     { src: "/room3.webp",         alt: "Room — Cosy Interior"                        },
     { src: "/room4.webp",         alt: "Room — Comfortable Stay"                     },
+    { src: "/room5.webp",         alt: "Room — Modern Layout & Design"               },
+    { src: "/room6.webp",         alt: "Room — Sleek Executive Setup",   span: "tall" },
+    { src: "/room7.webp",         alt: "Room — Warm and Elegant Vibe"                },
+    { src: "/room8.webp",         alt: "Room — Deluxe Double Bed Setup", span: "wide" },
+    { src: "/room9.webp",         alt: "Room — Contemporary Comfort Design"          },
   ],
   Bathroom: [
     { src: "/bathtub.webp",       alt: "Premium Room — Private Bathtub", span: "wide" },
     { src: "/rosetub.webp",       alt: "Bathroom — Rose Bath Experience", span: "tall" },
     { src: "/washroom.webp",      alt: "Bathroom — Clean & Hygienic"                },
     { src: "/washrooom2.webp",    alt: "Bathroom — Hot Water & Amenities"           },
+    { src: "/bathtub3.webp",      alt: "Bathroom — Luxury Bathtub Suite", span: "wide" },
+    { src: "/bathtub4.webp",      alt: "Bathroom — Premium Shower Design"            },
+    { src: "/washroom4.webp",     alt: "Bathroom — Modern Layout & Fittings"         },
+    { src: "/bathtub6.webp",      alt: "Bathroom — Private Bathtub & Spa", span: "tall" },
   ],
   "Common Area": [
     { src: "/stairs.webp",        alt: "Hotel — Staircase & Corridors",  span: "wide" },
@@ -173,7 +182,7 @@ export function GalleryPeekStrip() {
   const peekPhotos = [
     { src: "/dulex-room.webp",       alt: "Deluxe Room"        },
     { src: "/super-duplex.webp",     alt: "Super Deluxe Room"  },
-    { src: "/premium-room.webp",     alt: "Premium Room"       },
+    { src: "/premium-room.png",      alt: "Premium Room"       },
     { src: "/bathtub.webp",          alt: "Bathtub Suite"      },
     { src: "/hotel-exterior.webp",   alt: "Hotel Exterior"     },
   ];
