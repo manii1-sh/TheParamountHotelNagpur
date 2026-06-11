@@ -61,7 +61,7 @@ export const ROOMS: RoomData[] = [
   },
   {
     title: "Premium Room",
-    image: "/premium-room.png",
+    image: "/premium-room.webp",
     guests: "2 Guests",
     bed: "King Bed",
     description: "Our Premium Room offers an elevated experience with a private bathtub, extra space, superior interiors, and premium touches — ideal for guests who want the finest luxury.",

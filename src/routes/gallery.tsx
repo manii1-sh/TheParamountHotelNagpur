@@ -28,7 +28,7 @@ const PHOTOS: Record<Exclude<Tab, "All">, Photo[]> = {
   Rooms: [
     { src: "/dulex-room.webp",    alt: "Deluxe Room — King Bed",         span: "wide" },
     { src: "/super-duplex.webp",  alt: "Super Deluxe Room — King Bed",   span: "tall" },
-    { src: "/premium-room.png",   alt: "Premium Room — Bathtub Suite"               },
+    { src: "/premium-room.webp",  alt: "Premium Room — Bathtub Suite"               },
     { src: "/extraspace.webp",   alt: "Room — Extra Space & Comfort"               },
     { src: "/decoration.webp",    alt: "Room — Premium Décor",           span: "wide" },
     { src: "/room3.webp",         alt: "Room — Cosy Interior"                        },
@@ -51,6 +51,8 @@ const PHOTOS: Record<Exclude<Tab, "All">, Photo[]> = {
   ],
   "Common Area": [
     { src: "/stairs.webp",        alt: "Hotel — Staircase & Corridors",  span: "wide" },
+    { src: "/common area.webp",   alt: "Hotel — Common Seating Area",    span: "wide" },
+    { src: "/parking.webp",       alt: "Hotel — Secure Parking Area"                  },
   ],
   Exterior: [
     { src: "/hotel-exterior.webp",   alt: "The Paramount Hotel — Exterior View", span: "wide" },
@@ -182,7 +184,7 @@ export function GalleryPeekStrip() {
   const peekPhotos = [
     { src: "/dulex-room.webp",       alt: "Deluxe Room"        },
     { src: "/super-duplex.webp",     alt: "Super Deluxe Room"  },
-    { src: "/premium-room.png",      alt: "Premium Room"       },
+    { src: "/premium-room.webp",     alt: "Premium Room"       },
     { src: "/bathtub.webp",          alt: "Bathtub Suite"      },
     { src: "/hotel-exterior.webp",   alt: "Hotel Exterior"     },
   ];
