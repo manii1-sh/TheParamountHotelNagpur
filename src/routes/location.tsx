@@ -110,7 +110,7 @@ function LocationPage() {
           {/* RIGHT — hotel photo */}
           <div className="relative min-h-[340px] lg:min-h-[520px] overflow-hidden">
             <img
-              src="/hotel-exterior.png"
+              src="/hotel-exterior.webp"
               alt="The Paramount Hotel, Besa Nagpur"
               className="absolute inset-0 w-full h-full object-cover object-center"
             />

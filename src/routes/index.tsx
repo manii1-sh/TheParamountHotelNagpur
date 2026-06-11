@@ -248,7 +248,7 @@ Please share available room options.`;
         {/* Background image — full section */}
         <div className="absolute inset-0">
           <img
-            src="/hotel-firstpage.png"
+            src="/hotel-firstpage.webp"
             alt="The Paramount Hotel — Besa, Nagpur"
             className="w-full h-full object-cover object-center"
           />

@@ -41,7 +41,7 @@ export const SHARED_PRICING = DELUXE_PRICING;
 export const ROOMS: RoomData[] = [
   {
     title: "Deluxe Room",
-    image: "/dulex-room.png",
+    image: "/dulex-room.webp",
     guests: "2 Guests",
     bed: "King Bed",
     description: "A spacious and well-appointed room featuring plush bedding, modern furnishings, and a calm ambiance — perfect for business travelers or couples seeking comfort.",
@@ -51,7 +51,7 @@ export const ROOMS: RoomData[] = [
   },
   {
     title: "Super Deluxe Room",
-    image: "/super-duplex.png",
+    image: "/super-duplex.webp",
     guests: "2 Guests",
     bed: "King Bed",
     description: "Step up your stay with our Super Deluxe Room — a perfect blend of style and comfort, featuring upgraded furnishings, enhanced décor, and a premium feel that goes beyond the standard experience.",
@@ -61,7 +61,7 @@ export const ROOMS: RoomData[] = [
   },
   {
     title: "Premium Room",
-    image: "/premium-room.png",
+    image: "/premium-room.webp",
     guests: "2 Guests",
     bed: "King Bed",
     description: "Our Premium Room offers an elevated experience with a private bathtub, extra space, superior interiors, and premium touches — ideal for guests who want the finest luxury.",

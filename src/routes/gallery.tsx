@@ -26,27 +26,27 @@ type Tab = (typeof TABS)[number];
 
 const PHOTOS: Record<Exclude<Tab, "All">, Photo[]> = {
   Rooms: [
-    { src: "/dulex-room.png",    alt: "Deluxe Room — King Bed",         span: "wide" },
-    { src: "/super-duplex.png",  alt: "Super Deluxe Room — King Bed",   span: "tall" },
-    { src: "/premium-room.png",  alt: "Premium Room — Bathtub Suite"               },
-    { src: "/extraspace.jpeg",   alt: "Room — Extra Space & Comfort"               },
-    { src: "/decoration.png",    alt: "Room — Premium Décor",           span: "wide" },
-    { src: "/room3.png",         alt: "Room — Cosy Interior"                        },
-    { src: "/room4.png",         alt: "Room — Comfortable Stay"                     },
+    { src: "/dulex-room.webp",    alt: "Deluxe Room — King Bed",         span: "wide" },
+    { src: "/super-duplex.webp",  alt: "Super Deluxe Room — King Bed",   span: "tall" },
+    { src: "/premium-room.webp",  alt: "Premium Room — Bathtub Suite"               },
+    { src: "/extraspace.webp",   alt: "Room — Extra Space & Comfort"               },
+    { src: "/decoration.webp",    alt: "Room — Premium Décor",           span: "wide" },
+    { src: "/room3.webp",         alt: "Room — Cosy Interior"                        },
+    { src: "/room4.webp",         alt: "Room — Comfortable Stay"                     },
   ],
   Bathroom: [
-    { src: "/bathtub.png",       alt: "Premium Room — Private Bathtub", span: "wide" },
-    { src: "/rosetub.png",       alt: "Bathroom — Rose Bath Experience", span: "tall" },
-    { src: "/washroom.png",      alt: "Bathroom — Clean & Hygienic"                },
-    { src: "/washrooom2.png",    alt: "Bathroom — Hot Water & Amenities"           },
+    { src: "/bathtub.webp",       alt: "Premium Room — Private Bathtub", span: "wide" },
+    { src: "/rosetub.webp",       alt: "Bathroom — Rose Bath Experience", span: "tall" },
+    { src: "/washroom.webp",      alt: "Bathroom — Clean & Hygienic"                },
+    { src: "/washrooom2.webp",    alt: "Bathroom — Hot Water & Amenities"           },
   ],
   "Common Area": [
-    { src: "/stairs.png",        alt: "Hotel — Staircase & Corridors",  span: "wide" },
+    { src: "/stairs.webp",        alt: "Hotel — Staircase & Corridors",  span: "wide" },
   ],
   Exterior: [
-    { src: "/hotel-exterior.png",   alt: "The Paramount Hotel — Exterior View", span: "wide" },
-    { src: "/hotel2.jpeg",          alt: "The Paramount Hotel — Building View",  span: "wide" },
-    { src: "/parking.png",          alt: "Free & Secure Parking"                            },
+    { src: "/hotel-exterior.webp",   alt: "The Paramount Hotel — Exterior View", span: "wide" },
+    { src: "/hotel2.webp",          alt: "The Paramount Hotel — Building View",  span: "wide" },
+    { src: "/parking.webp",          alt: "Free & Secure Parking"                            },
   ],
 };
 
@@ -171,11 +171,11 @@ function GalleryGrid({
 // ─── Exported section (used in index.tsx) ────────────────────────────────────
 export function GalleryPeekStrip() {
   const peekPhotos = [
-    { src: "/dulex-room.png",       alt: "Deluxe Room"        },
-    { src: "/super-duplex.png",     alt: "Super Deluxe Room"  },
-    { src: "/premium-room.png",     alt: "Premium Room"       },
-    { src: "/bathtub.png",          alt: "Bathtub Suite"      },
-    { src: "/hotel-exterior.png",   alt: "Hotel Exterior"     },
+    { src: "/dulex-room.webp",       alt: "Deluxe Room"        },
+    { src: "/super-duplex.webp",     alt: "Super Deluxe Room"  },
+    { src: "/premium-room.webp",     alt: "Premium Room"       },
+    { src: "/bathtub.webp",          alt: "Bathtub Suite"      },
+    { src: "/hotel-exterior.webp",   alt: "Hotel Exterior"     },
   ];
 
   return (

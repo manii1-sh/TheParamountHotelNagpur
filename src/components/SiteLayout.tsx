@@ -74,7 +74,7 @@ export function SiteLayout({ children }: { children: ReactNode }) {
             {/* Main Logo Image */}
             <div className="relative flex items-center justify-center w-11 h-11 transition-transform duration-300 group-hover:scale-105">
               <img
-                src="/main-logo.png"
+                src="/main-logo.webp"
                 alt="The Paramount Logo"
                 className="w-full h-full object-contain"
               />
