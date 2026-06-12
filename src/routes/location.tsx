@@ -40,7 +40,7 @@ const NEARBY = [
   { icon: PlaneLanding, label: "Dr. Babasaheb Ambedkar International Airport", km: "3.9 KM", drive: "8 Mins Drive" },
   { icon: Building2, label: "AIIMS Nagpur", km: "6.5 KM", drive: "12 Mins Drive" },
   { icon: Building2, label: "MIHAN", km: "7.2 KM", drive: "14 Mins Drive" },
-  { icon: TrainFront, label: "Metro Station", km: "6.0 KM", drive: "10 Mins Drive" },
+  { icon: TrainFront, label: "Metro Station", km: "2.9 KM", drive: "6 Mins Drive" },
   { icon: Trophy, label: "VCA Stadium", km: "10 KM", drive: "15 Mins Drive" },
   { icon: Waves, label: "Ambazari Lake", km: "8.2 KM", drive: "15 Mins Drive" },
 ];
