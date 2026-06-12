@@ -223,7 +223,7 @@ export function SiteLayout({ children }: { children: ReactNode }) {
               <li>📍 Plot No. 30, Beltarodi Road, Manish Nagar, Besa, Nagpur</li>
               <li><a href="tel:+919322520682" className="hover:text-[#E5B83E] transition-colors">📞 +91 93225 20682</a></li>
               <li>🕐 Check-in 12 PM · Check-out 11 AM</li>
-              <li>⭐ 4.8 · 178+ Google Reviews</li>
+              <li>⭐ 4.0 · 178+ Google Reviews</li>
             </ul>
           </div>
         </div>

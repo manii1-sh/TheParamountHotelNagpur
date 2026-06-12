@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { X, User, BedDouble, Check, Timer } from "lucide-react";
+import { X, User, BedDouble, Check, Timer, ChevronLeft, ChevronRight } from "lucide-react";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 export type PricingSlot = { label: string; duration: string; price: number };
@@ -12,6 +12,7 @@ export type RoomData = {
   amenities: string[];
   pricing: PricingSlot[];
   whatsappMessage: string;
+  previewImages?: string[]; // Array of images for the room preview
 };
 
 // ─── Shared pricing & room data ───────────────────────────────────────────────
@@ -48,6 +49,14 @@ export const ROOMS: RoomData[] = [
     amenities: ["Free Wi-Fi", "Air Conditioning", "LED TV", "Room Service", "Hot Water", "Daily Housekeeping", "Free Parking", "24/7 Reception"],
     pricing: DELUXE_PRICING,
     whatsappMessage: "Hello The Paramount Hotel, I am interested in booking the Deluxe Room. Please share availability.",
+    previewImages: [
+      "/dulex-room.webp",
+      "/room5.webp",
+      "/room6.webp",
+      "/room7.webp",
+      "/washroom4.webp",
+      "/washrooom2.webp"
+    ],
   },
   {
     title: "Super Deluxe Room",
@@ -55,9 +64,10 @@ export const ROOMS: RoomData[] = [
     guests: "2 Guests",
     bed: "King Bed",
     description: "Step up your stay with our Super Deluxe Room — a perfect blend of style and comfort, featuring upgraded furnishings, enhanced décor, and a premium feel that goes beyond the standard experience.",
-    amenities: ["Free Wi-Fi", "Air Conditioning", "Smart LED TV", "Room Service", "Hot Water", "Daily Housekeeping", "Free Parking", "24/7 Reception", "Work Desk", "Wardrobe"],
+    amenities: ["Free Wi-Fi", "Air Conditioning", "Smart LED TV", "Room Service", "Hot Water", "Daily Housekeeping", "Free Parking", "24/7 Reception"],
     pricing: SUPER_DELUXE_PRICING,
     whatsappMessage: "Hello The Paramount Hotel, I am interested in booking the Super Deluxe Room. Please share availability.",
+    previewImages: ["/super-duplex.webp"],
   },
   {
     title: "Premium Room",
@@ -65,11 +75,67 @@ export const ROOMS: RoomData[] = [
     guests: "2 Guests",
     bed: "King Bed",
     description: "Our Premium Room offers an elevated experience with a private bathtub, extra space, superior interiors, and premium touches — ideal for guests who want the finest luxury.",
-    amenities: ["Free Wi-Fi", "Air Conditioning", "Smart TV", "Private Bathtub", "Mini Fridge", "Room Service", "Hot Water", "Daily Housekeeping", "Free Parking", "24/7 Reception"],
+    amenities: ["Free Wi-Fi", "Air Conditioning", "Smart TV", "Private Bathtub", "Room Service", "Hot Water", "Daily Housekeeping", "Free Parking", "24/7 Reception"],
     pricing: PREMIUM_PRICING,
     whatsappMessage: "Hello The Paramount Hotel, I am interested in booking the Premium Room (Bathtub). Please share availability.",
+    previewImages: [
+      "/premium-room.webp",
+      "/washroom.webp",
+      "/bathtub 4.webp",
+      "/bathtub.webp",
+      "/bathtub3.webp",
+      "/bathtub5.webp"
+    ],
   },
 ];
+
+// Helper to convert 24-hour time string (HH:MM) to 12-hour format with AM/PM (e.g. 12:00 PM, 1:30 PM)
+const formatTimeTo12Hour = (time24: string): string => {
+  if (!time24) return "";
+  const [hoursStr, minutesStr] = time24.split(":");
+  const hours = parseInt(hoursStr, 10);
+  if (isNaN(hours)) return time24;
+  const ampm = hours >= 12 ? "PM" : "AM";
+  const hours12 = hours % 12 || 12;
+  return `${hours12}:${minutesStr} ${ampm}`;
+};
+
+// Helper to calculate extra guest charge (₹300 per person above 2 guests)
+const getExtraGuestCharge = (guestsStr: string): number => {
+  if (guestsStr === "3 Guests") return 300;
+  if (guestsStr === "4 Guests") return 600;
+  if (guestsStr === "5 Guests") return 900; // Rate for 3 extra guests (5 guests total)
+  return 0;
+};
+
+// Helper to calculate check-out time based on check-in time and hourly stay duration
+const calculateCheckoutTime = (
+  checkInTimeStr: string,
+  durationLabel: string
+): { time: string; nextDay: boolean } => {
+  if (!checkInTimeStr) return { time: "", nextDay: false };
+  const [hoursStr, minutesStr] = checkInTimeStr.split(":");
+  let hours = parseInt(hoursStr, 10);
+  const minutes = parseInt(minutesStr, 10);
+  if (isNaN(hours) || isNaN(minutes)) return { time: "", nextDay: false };
+
+  let hoursToAdd = 0;
+  if (durationLabel === "6 Hours") {
+    hoursToAdd = 6;
+  } else if (durationLabel === "12 Hours") {
+    hoursToAdd = 12;
+  } else {
+    return { time: "", nextDay: false };
+  }
+
+  hours += hoursToAdd;
+  const nextDay = hours >= 24;
+  hours = hours % 24;
+
+  const hoursPad = String(hours).padStart(2, "0");
+  const minutesPad = String(minutes).padStart(2, "0");
+  return { time: `${hoursPad}:${minutesPad}`, nextDay };
+};
 
 // ─── Modal Component ──────────────────────────────────────────────────────────
 export function RoomModal({
@@ -147,6 +213,24 @@ export function RoomModal({
         setValidationError("Please select check-in time.");
         return false;
       }
+      const todayStr = getTodayDateString();
+      if (checkIn === todayStr) {
+        const now = new Date();
+        const currentHours = now.getHours();
+        const currentMinutes = now.getMinutes();
+
+        const [selectedHoursStr, selectedMinutesStr] = checkInTime.split(":");
+        const selectedHours = parseInt(selectedHoursStr, 10);
+        const selectedMinutes = parseInt(selectedMinutesStr, 10);
+
+        if (
+          selectedHours < currentHours ||
+          (selectedHours === currentHours && selectedMinutes < currentMinutes)
+        ) {
+          setValidationError("Check-In time cannot be in the past for today's booking.");
+          return false;
+        }
+      }
     } else {
       if (!checkOut) {
         setValidationError("Please select check-out date.");
@@ -180,17 +264,30 @@ export function RoomModal({
 
     let dateDetails = `Check-In Date: ${checkIn}`;
     if (isHourly) {
-      dateDetails += `\nCheck-In Time: ${checkInTime}`;
+      const calc = calculateCheckoutTime(checkInTime, slot.label);
+      const checkoutTimeFormatted = calc.time ? `${formatTimeTo12Hour(calc.time)}${calc.nextDay ? " (Next Day)" : ""}` : "";
+      dateDetails += `\nCheck-In Time: ${formatTimeTo12Hour(checkInTime)}`;
+      if (checkoutTimeFormatted) {
+        dateDetails += `\nCheck-Out Time: ${checkoutTimeFormatted}`;
+      }
     } else {
       dateDetails += `\nCheck-Out Date: ${checkOut}`;
     }
+
+    const isPremiumPizzaOffer = room.title === "Premium Room" && (slot.label === "6 Hours" || slot.label === "Full Day");
+    const pizzaNote = isPremiumPizzaOffer ? "\nPromo Selected: *2 Complimentary Pizzas Offer (6/24 Hr Stay)*" : "";
+
+    const extraCharge = getExtraGuestCharge(guests);
+    const totalPrice = slot.price + extraCharge;
+    const extraChargeNote = extraCharge > 0 ? `\nExtra Guest Charge: ₹${extraCharge} (for ${guests})` : "";
+    const totalPriceStr = extraCharge > 0 ? `₹${totalPrice} (₹${slot.price} base + ₹${extraCharge} extra)` : `₹${slot.price}`;
 
     const msg = `Hello The Paramount Hotel,
 
 I would like to book a stay:
 Room Type: *${room.title}*
 Rate Selected: ${slot.label} (${slot.duration})
-Price: ₹${slot.price}
+Price: ${totalPriceStr}${extraChargeNote}${pizzaNote}
 
 Guest Name: ${name}
 Mobile Number: ${mobile}
@@ -255,6 +352,21 @@ Please confirm availability.`;
         <div className="overflow-y-auto flex-1 p-5 sm:p-6 space-y-6">
           <p className="text-sm text-[#040E21]/70 font-sans leading-relaxed">{room.description}</p>
 
+          {/* Pizza Promo Offer */}
+          {room.title === "Premium Room" && (
+            <div className="p-3.5 bg-amber-500/10 border border-amber-500/25 rounded-xl flex items-start gap-3 text-left">
+              <span className="text-xl leading-none select-none">🍕</span>
+              <div className="space-y-0.5">
+                <span className="text-[10px] font-sans font-bold uppercase tracking-wider text-amber-800">
+                  Exclusive Room Offer
+                </span>
+                <p className="text-xs text-amber-900/90 font-medium font-sans">
+                  Get <strong>2 complimentary pizzas</strong> on a 6-hour or 24-hour stay!
+                </p>
+              </div>
+            </div>
+          )}
+
           {/* Amenities */}
           <div>
             <h4 className="text-[10px] uppercase tracking-[0.2em] font-bold text-[#040E21]/50 mb-3">
@@ -292,13 +404,24 @@ Please confirm availability.`;
                     }`}
                   >
                     <div>
-                      <p
-                        className={`font-serif font-bold text-base leading-tight ${
-                          isSelected ? "text-[#E5B83E]" : "text-[#040E21]"
-                        }`}
-                      >
-                        {slot.label}
-                      </p>
+                      <div className="flex items-center gap-2">
+                        <p
+                          className={`font-serif font-bold text-base leading-tight ${
+                            isSelected ? "text-[#E5B83E]" : "text-[#040E21]"
+                          }`}
+                        >
+                          {slot.label}
+                        </p>
+                        {room.title === "Premium Room" && (slot.label === "6 Hours" || slot.label === "Full Day") && (
+                          <span className={`text-[9px] font-bold uppercase px-1.5 py-0.5 rounded tracking-wider flex items-center gap-0.5 border ${
+                            isSelected 
+                              ? "bg-amber-500/20 text-[#E5B83E] border-amber-500/30" 
+                              : "bg-amber-500/10 text-amber-700 border-amber-500/20"
+                          }`}>
+                            🍕 2 Free Pizzas
+                          </span>
+                        )}
+                      </div>
                       <p
                         className={`text-[11px] font-sans mt-0.5 ${
                           isSelected ? "text-white/50" : "text-[#040E21]/45"
@@ -366,7 +489,9 @@ Please confirm availability.`;
                     <span className="text-white/40">·</span>
                     <span className="text-white/80">{activeBookingSlot.duration}</span>
                     <span className="text-white/40">·</span>
-                    <span className="text-[#E5B83E] font-bold">₹{activeBookingSlot.price}</span>
+                    <span className="text-[#E5B83E] font-bold">
+                      ₹{activeBookingSlot.price + getExtraGuestCharge(guests)}
+                    </span>
                   </div>
                 </div>
                 <button
@@ -441,6 +566,17 @@ Please confirm availability.`;
                         className="w-full bg-white border border-[#E2E8F0] focus:border-[#E5B83E] rounded-lg py-2 px-3 text-xs font-semibold text-[#040E21] outline-none cursor-pointer"
                         required
                       />
+                      {checkInTime && activeBookingSlot && (
+                        <p className="text-[10px] text-[#040E21]/60 font-sans mt-1">
+                          ⏰ Auto Check-Out:{" "}
+                          <strong className="text-amber-600">
+                            {(() => {
+                              const calc = calculateCheckoutTime(checkInTime, activeBookingSlot.label);
+                              return `${formatTimeTo12Hour(calc.time)}${calc.nextDay ? " (Next Day)" : ""}`;
+                            })()}
+                          </strong>
+                        </p>
+                      )}
                     </div>
                   ) : (
                     <div className="space-y-1">
@@ -473,12 +609,17 @@ Please confirm availability.`;
                       <option value="2 Guests">2 Guests</option>
                       <option value="3 Guests">3 Guests</option>
                       <option value="4 Guests">4 Guests</option>
-                      <option value="5+ Guests">5+ Guests</option>
+                      <option value="5 Guests">5 Guests</option>
                     </select>
                     <div className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-[#040E21]/40 text-xs">
                       ▾
                     </div>
                   </div>
+                  {getExtraGuestCharge(guests) > 0 && (
+                    <p className="text-[10px] text-amber-600 font-sans font-medium mt-1">
+                      * Extra guest charge: +₹{getExtraGuestCharge(guests)} (₹300/person above 2 guests)
+                    </p>
+                  )}
                 </div>
 
                 <div className="flex gap-2.5 pt-2">
@@ -501,6 +642,121 @@ Please confirm availability.`;
                 </div>
               </form>
             </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+// ─── Room Preview Lightbox Component ─────────────────────────────────────────
+export function RoomPreviewModal({
+  room,
+  onClose,
+}: {
+  room: RoomData;
+  onClose: () => void;
+}) {
+  const images = room.previewImages && room.previewImages.length > 0
+    ? room.previewImages
+    : [room.image];
+
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+      if (e.key === "ArrowRight") {
+        setActiveIndex((prev) => (prev + 1) % images.length);
+      }
+      if (e.key === "ArrowLeft") {
+        setActiveIndex((prev) => (prev - 1 + images.length) % images.length);
+      }
+    };
+    document.addEventListener("keydown", handleKeyDown);
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = "";
+    };
+  }, [images.length, onClose]);
+
+  return (
+    <div
+      className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/95 backdrop-blur-sm p-4 animate-fade-in"
+      onClick={(e) => {
+        if (e.target === e.currentTarget) onClose();
+      }}
+    >
+      {/* Close button */}
+      <button
+        onClick={onClose}
+        className="absolute top-6 right-6 z-50 p-2.5 rounded-full bg-white/10 text-white hover:bg-white/20 transition-all cursor-pointer"
+        aria-label="Close Preview"
+      >
+        <X className="w-6 h-6" />
+      </button>
+
+      <div className="relative max-w-4xl w-full flex flex-col items-center justify-center space-y-4">
+        {/* Main image container */}
+        <div className="relative w-full aspect-[4/3] sm:aspect-[16/9] rounded-xl overflow-hidden shadow-2xl flex items-center justify-center bg-black">
+          <img
+            src={images[activeIndex]}
+            alt={`${room.title} Preview ${activeIndex + 1}`}
+            className="max-h-full max-w-full object-contain"
+          />
+
+          {/* Left Arrow */}
+          {images.length > 1 && (
+            <button
+              onClick={() => setActiveIndex((prev) => (prev - 1 + images.length) % images.length)}
+              className="absolute left-4 p-2.5 rounded-full bg-black/50 text-white hover:bg-black/80 hover:scale-105 active:scale-95 transition-all select-none cursor-pointer"
+              aria-label="Previous image"
+            >
+              <ChevronLeft className="w-5 h-5" />
+            </button>
+          )}
+
+          {/* Right Arrow */}
+          {images.length > 1 && (
+            <button
+              onClick={() => setActiveIndex((prev) => (prev + 1) % images.length)}
+              className="absolute right-4 p-2.5 rounded-full bg-black/50 text-white hover:bg-black/80 hover:scale-105 active:scale-95 transition-all select-none cursor-pointer"
+              aria-label="Next image"
+            >
+              <ChevronRight className="w-5 h-5" />
+            </button>
+          )}
+
+          {/* Image index counter badge */}
+          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 px-3 py-1 bg-black/60 rounded-full text-white text-[11px] font-sans font-bold select-none">
+            {activeIndex + 1} / {images.length}
+          </div>
+        </div>
+
+        {/* Room Title */}
+        <div className="text-center text-white space-y-1">
+          <h4 className="font-serif text-lg md:text-xl font-bold tracking-wide">{room.title} Preview</h4>
+          <p className="text-xs text-white/50 font-sans">Use keyboard arrows to navigate</p>
+        </div>
+
+        {/* Thumbnails row */}
+        {images.length > 1 && (
+          <div className="flex items-center gap-2 max-w-full overflow-x-auto py-2 px-4 scrollbar-none">
+            {images.map((img, idx) => {
+              const isActive = idx === activeIndex;
+              return (
+                <button
+                  key={idx}
+                  onClick={() => setActiveIndex(idx)}
+                  className={`w-14 h-10 md:w-16 md:h-12 rounded-md overflow-hidden shrink-0 border-2 transition-all cursor-pointer ${
+                    isActive ? "border-[#E5B83E] scale-105" : "border-transparent opacity-40 hover:opacity-80"
+                  }`}
+                >
+                  <img src={img} alt="Thumbnail" className="w-full h-full object-cover" />
+                </button>
+              );
+            })}
           </div>
         )}
       </div>

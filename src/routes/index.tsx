@@ -171,6 +171,46 @@ function ConciergePanel({ onClose }: { onClose: () => void }) {
   );
 }
 
+// Helper to convert 24-hour time string (HH:MM) to 12-hour format with AM/PM (e.g. 12:00 PM, 1:30 PM)
+const formatTimeTo12Hour = (time24: string): string => {
+  if (!time24) return "";
+  const [hoursStr, minutesStr] = time24.split(":");
+  const hours = parseInt(hoursStr, 10);
+  if (isNaN(hours)) return time24;
+  const ampm = hours >= 12 ? "PM" : "AM";
+  const hours12 = hours % 12 || 12;
+  return `${hours12}:${minutesStr} ${ampm}`;
+};
+
+// Helper to calculate check-out time based on check-in time and hourly stay duration
+const calculateCheckoutTime = (
+  checkInTimeStr: string,
+  durationLabel: string
+): { time: string; nextDay: boolean } => {
+  if (!checkInTimeStr) return { time: "", nextDay: false };
+  const [hoursStr, minutesStr] = checkInTimeStr.split(":");
+  let hours = parseInt(hoursStr, 10);
+  const minutes = parseInt(minutesStr, 10);
+  if (isNaN(hours) || isNaN(minutes)) return { time: "", nextDay: false };
+
+  let hoursToAdd = 0;
+  if (durationLabel === "6 Hours") {
+    hoursToAdd = 6;
+  } else if (durationLabel === "12 Hours") {
+    hoursToAdd = 12;
+  } else {
+    return { time: "", nextDay: false };
+  }
+
+  hours += hoursToAdd;
+  const nextDay = hours >= 24;
+  hours = hours % 24;
+
+  const hoursPad = String(hours).padStart(2, "0");
+  const minutesPad = String(minutes).padStart(2, "0");
+  return { time: `${hoursPad}:${minutesPad}`, nextDay };
+};
+
 function Index() {
   const [isConciergeOpen, setIsConciergeOpen] = useState(false);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -216,6 +256,31 @@ function Index() {
       return;
     }
 
+    if (isHourly && checkInTime) {
+      const todayObj = new Date();
+      const yyyy = todayObj.getFullYear();
+      const mm = String(todayObj.getMonth() + 1).padStart(2, "0");
+      const dd = String(todayObj.getDate()).padStart(2, "0");
+      const todayStr = `${yyyy}-${mm}-${dd}`;
+
+      if (checkIn === todayStr) {
+        const currentHours = todayObj.getHours();
+        const currentMinutes = todayObj.getMinutes();
+
+        const [selectedHoursStr, selectedMinutesStr] = checkInTime.split(":");
+        const selectedHours = parseInt(selectedHoursStr, 10);
+        const selectedMinutes = parseInt(selectedMinutesStr, 10);
+
+        if (
+          selectedHours < currentHours ||
+          (selectedHours === currentHours && selectedMinutes < currentMinutes)
+        ) {
+          setValidationError("Check-In time cannot be in the past for today's booking.");
+          return;
+        }
+      }
+    }
+
     if (!isHourly) {
       const checkOutDate = new Date(checkOut);
       if (checkOutDate <= checkInDate) {
@@ -226,7 +291,12 @@ function Index() {
 
     let dateDetails = `Check-In Date: ${checkIn}`;
     if (isHourly) {
-      dateDetails += `\nCheck-In Time: ${checkInTime}`;
+      const calc = calculateCheckoutTime(checkInTime, stayDuration);
+      const checkoutTimeFormatted = calc.time ? `${formatTimeTo12Hour(calc.time)}${calc.nextDay ? " (Next Day)" : ""}` : "";
+      dateDetails += `\nCheck-In Time: ${formatTimeTo12Hour(checkInTime)}`;
+      if (checkoutTimeFormatted) {
+        dateDetails += `\nCheck-Out Time: ${checkoutTimeFormatted}`;
+      }
     } else {
       dateDetails += `\nCheck-Out Date: ${checkOut}`;
     }
@@ -400,10 +470,9 @@ Please share available room options.`;
                             className="w-full bg-white border border-[#E2E8F0] focus:border-[#E5B83E] rounded-lg py-1.5 pl-2.5 pr-8 text-xs font-semibold text-[#040E21] outline-none transition-all cursor-pointer appearance-none font-sans"
                           >
                             <option value="Any Room Type">Any Room</option>
-                            <option value="Deluxe Room">Deluxe</option>
-                            <option value="Executive Room">Executive</option>
-                            <option value="Premium Room">Premium</option>
-                            <option value="Family Room">Family</option>
+                            <option value="Deluxe Room">Deluxe Room</option>
+                            <option value="Super Deluxe Room">Super Deluxe Room</option>
+                            <option value="Premium Room">Premium Room</option>
                           </select>
                           <ChevronDown className="absolute right-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-[#040E21]/50 pointer-events-none" />
                         </div>
@@ -439,6 +508,17 @@ Please share available room options.`;
                             required
                             className="w-full bg-white border border-[#E2E8F0] focus:border-[#E5B83E] focus:ring-1 focus:ring-[#E5B83E] rounded-lg py-1.5 px-2.5 text-xs font-semibold text-[#040E21] outline-none transition-all cursor-pointer"
                           />
+                          {checkInTime && (
+                            <p className="text-[10px] text-[#040E21]/60 font-sans mt-1">
+                              ⏰ Auto Check-Out:{" "}
+                              <strong className="text-amber-600">
+                                {(() => {
+                                  const calc = calculateCheckoutTime(checkInTime, stayDuration);
+                                  return `${formatTimeTo12Hour(calc.time)}${calc.nextDay ? " (Next Day)" : ""}`;
+                                })()}
+                              </strong>
+                            </p>
+                          )}
                         </div>
                       ) : (
                         <div className="space-y-1">
@@ -475,7 +555,7 @@ Please share available room options.`;
                             <option value="2 Guests">2 Guests</option>
                             <option value="3 Guests">3 Guests</option>
                             <option value="4 Guests">4 Guests</option>
-                            <option value="5+ Guests">5+ Guests</option>
+                            <option value="5 Guests">5 Guests</option>
                           </select>
                           <ChevronDown className="absolute right-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-[#040E21]/50 pointer-events-none" />
                         </div>
@@ -759,10 +839,9 @@ Please share available room options.`;
                       className="w-full bg-white border border-[#E2E8F0] focus:border-[#E5B83E] rounded-lg py-1.5 pl-2.5 pr-8 text-xs font-semibold text-[#040E21] outline-none appearance-none font-sans cursor-pointer"
                     >
                       <option value="Any Room Type">Any Room</option>
-                      <option value="Deluxe Room">Deluxe</option>
-                      <option value="Executive Room">Executive</option>
-                      <option value="Premium Room">Premium</option>
-                      <option value="Family Room">Family</option>
+                      <option value="Deluxe Room">Deluxe Room</option>
+                      <option value="Super Deluxe Room">Super Deluxe Room</option>
+                      <option value="Premium Room">Premium Room</option>
                     </select>
                     <ChevronDown className="absolute right-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-[#040E21]/50 pointer-events-none" />
                   </div>
@@ -798,6 +877,17 @@ Please share available room options.`;
                       required
                       className="w-full bg-white border border-[#E2E8F0] focus:border-[#E5B83E] rounded-lg py-1.5 px-2.5 text-xs font-semibold text-[#040E21] outline-none cursor-pointer"
                     />
+                    {checkInTime && (
+                      <p className="text-[10px] text-[#040E21]/60 font-sans mt-1">
+                        ⏰ Auto Check-Out:{" "}
+                        <strong className="text-amber-600">
+                          {(() => {
+                            const calc = calculateCheckoutTime(checkInTime, stayDuration);
+                            return `${formatTimeTo12Hour(calc.time)}${calc.nextDay ? " (Next Day)" : ""}`;
+                          })()}
+                        </strong>
+                      </p>
+                    )}
                   </div>
                 ) : (
                   <div className="space-y-1">
@@ -834,7 +924,7 @@ Please share available room options.`;
                       <option value="2 Guests">2 Guests</option>
                       <option value="3 Guests">3 Guests</option>
                       <option value="4 Guests">4 Guests</option>
-                      <option value="5+ Guests">5+ Guests</option>
+                      <option value="5 Guests">5 Guests</option>
                     </select>
                     <ChevronDown className="absolute right-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-[#040E21]/50 pointer-events-none" />
                   </div>

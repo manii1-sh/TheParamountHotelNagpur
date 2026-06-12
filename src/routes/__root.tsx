@@ -95,6 +95,15 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         rel: "stylesheet",
         href: appCss,
       },
+      {
+        rel: "icon",
+        type: "image/webp",
+        href: "/main-logo.webp",
+      },
+      {
+        rel: "apple-touch-icon",
+        href: "/main-logo.webp",
+      },
     ],
   }),
   shellComponent: RootShell,

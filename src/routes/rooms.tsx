@@ -1,8 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { User, BedDouble, ArrowRight } from "lucide-react";
+import { User, BedDouble, ArrowRight, Eye } from "lucide-react";
 import { SiteLayout } from "@/components/SiteLayout";
-import { RoomModal, ROOMS, type RoomData } from "@/components/RoomModal";
+import { RoomModal, RoomPreviewModal, ROOMS, type RoomData } from "@/components/RoomModal";
 
 export const Route = createFileRoute("/rooms")({
   head: () => ({
@@ -31,12 +31,16 @@ function RoomsPage() {
 // ─── Exported so index.tsx can reuse it ──────────────────────────────────────
 export function RoomsSection() {
   const [selectedRoom, setSelectedRoom] = useState<RoomData | null>(null);
+  const [previewRoom, setPreviewRoom] = useState<RoomData | null>(null);
   const rooms = ROOMS;
 
   return (
     <>
       {selectedRoom && (
         <RoomModal room={selectedRoom} onClose={() => setSelectedRoom(null)} />
+      )}
+      {previewRoom && (
+        <RoomPreviewModal room={previewRoom} onClose={() => setPreviewRoom(null)} />
       )}
 
       {/* Rooms Showcase Section */}
@@ -73,6 +77,14 @@ export function RoomsSection() {
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-[#040E21]/15 group-hover:bg-transparent transition-colors duration-300"></div>
+                  
+                  {/* Special Pizza Promo Badge for Premium Room */}
+                  {room.title === "Premium Room" && (
+                    <div className="absolute top-3 left-3 z-10 bg-[#E5B83E] text-[#040E21] text-[9px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full shadow-md flex items-center gap-1">
+                      <span>🍕 Special Offer</span>
+                    </div>
+                  )}
+
                   {/* View Details badge */}
                   <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                     <span className="bg-[#E5B83E] text-[#040E21] text-[9px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full">
@@ -99,6 +111,16 @@ export function RoomsSection() {
                         <span>{room.bed}</span>
                       </div>
                     </div>
+
+                    {/* Promo Offer Banner */}
+                    {room.title === "Premium Room" && (
+                      <div className="mt-2.5 p-2 rounded bg-amber-500/10 border border-amber-500/20 text-[#F2C953] text-[11px] leading-relaxed flex items-start gap-2">
+                        <span className="text-sm shrink-0 leading-none select-none">🍕</span>
+                        <span>
+                          Get <strong>2 complimentary pizzas</strong> on 6 & 24 hr stays!
+                        </span>
+                      </div>
+                    )}
                   </div>
 
                   <div className="space-y-3 pt-2 border-t border-white/10">
@@ -109,13 +131,23 @@ export function RoomsSection() {
                       <span className="text-[10px] text-[#FAFAFA]/40">/ 6 hrs</span>
                     </div>
 
-                    <button
-                      onClick={(e) => { e.stopPropagation(); setSelectedRoom(room); }}
-                      className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[#E5B83E] hover:text-[#F2C953] group/btn transition-colors cursor-pointer"
-                    >
-                      View Pricing & Book
-                      <ArrowRight className="w-3.5 h-3.5 text-[#E5B83E] transition-transform duration-300 group-hover/btn:translate-x-1" />
-                    </button>
+                    <div className="flex items-center justify-between gap-4 pt-1">
+                      <button
+                        onClick={(e) => { e.stopPropagation(); setSelectedRoom(room); }}
+                        className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[#E5B83E] hover:text-[#F2C953] group/btn transition-colors cursor-pointer"
+                      >
+                        View Pricing & Book
+                        <ArrowRight className="w-3.5 h-3.5 text-[#E5B83E] transition-transform duration-300 group-hover/btn:translate-x-1" />
+                      </button>
+
+                      <button
+                        onClick={(e) => { e.stopPropagation(); setPreviewRoom(room); }}
+                        className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest text-white/50 hover:text-white group transition-colors cursor-pointer"
+                      >
+                        <Eye className="w-3.5 h-3.5 text-white/50 group-hover:text-white transition-colors" />
+                        Preview
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
