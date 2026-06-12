@@ -15,7 +15,6 @@ import {
   BadgePercent,
   CircleParking,
 } from "lucide-react";
-import { HOTEL_PHONE } from "@/components/RoomModal";
 
 export const Route = createFileRoute("/location")({
   head: () => ({
@@ -39,25 +38,25 @@ const EMBED_URL =
 
 const NEARBY = [
   { icon: PlaneLanding, label: "Dr. Babasaheb Ambedkar International Airport", km: "3.9 KM", drive: "8 Mins Drive" },
-  { icon: Building2,    label: "AIIMS Nagpur",     km: "6.5 KM",  drive: "12 Mins Drive" },
-  { icon: Building2,    label: "MIHAN",             km: "7.2 KM",  drive: "14 Mins Drive" },
-  { icon: TrainFront,   label: "Metro Station",     km: "6.0 KM",  drive: "10 Mins Drive" },
-  { icon: Trophy,       label: "VCA Stadium",       km: "10 KM",   drive: "15 Mins Drive" },
-  { icon: Waves,        label: "Ambazari Lake",     km: "8.2 KM",  drive: "15 Mins Drive" },
+  { icon: Building2, label: "AIIMS Nagpur", km: "6.5 KM", drive: "12 Mins Drive" },
+  { icon: Building2, label: "MIHAN", km: "7.2 KM", drive: "14 Mins Drive" },
+  { icon: TrainFront, label: "Metro Station", km: "6.0 KM", drive: "10 Mins Drive" },
+  { icon: Trophy, label: "VCA Stadium", km: "10 KM", drive: "15 Mins Drive" },
+  { icon: Waves, label: "Ambazari Lake", km: "8.2 KM", drive: "15 Mins Drive" },
 ];
 
 const FEATURES = [
-  { icon: Car,           title: "Easy Access",     desc: "Well connected to major highways and city centres for a smooth journey." },
-  { icon: CircleParking, title: "Free Parking",    desc: "Spacious and secure parking available for all our guests." },
-  { icon: PlaneLanding,  title: "Airport Pickup",  desc: "Hassle-free airport transfers available on request." },
-  { icon: MapPin,        title: "Prime Location",  desc: "Stay close to business hubs, hospitals, attractions and transport." },
+  { icon: Car, title: "Easy Access", desc: "Well connected to major highways and city centres for a smooth journey." },
+  { icon: CircleParking, title: "Free Parking", desc: "Spacious and secure parking available for all our guests." },
+  { icon: PlaneLanding, title: "Airport Pickup", desc: "Hassle-free airport transfers available on request." },
+  { icon: MapPin, title: "Prime Location", desc: "Stay close to business hubs, hospitals, attractions and transport." },
 ];
 
 const TRUST = [
-  { icon: MapPin,        title: "Prime Manish Nagar Location", desc: "Heart of Nagpur" },
-  { icon: ShieldCheck,   title: "Safe & Secure Area",  desc: "Peace of mind for you and your family" },
-  { icon: Headphones,    title: "24/7 Guest Support",  desc: "We're always here whenever you need" },
-  { icon: BadgePercent,  title: "Best Price Guarantee",desc: "Book direct & save more" },
+  { icon: MapPin, title: "Prime Manish Nagar Location", desc: "Heart of Nagpur" },
+  { icon: ShieldCheck, title: "Safe & Secure Area", desc: "Peace of mind for you and your family" },
+  { icon: Headphones, title: "24/7 Guest Support", desc: "We're always here whenever you need" },
+  { icon: BadgePercent, title: "Best Price Guarantee", desc: "Book direct & save more" },
 ];
 
 function LocationPage() {
@@ -242,7 +241,7 @@ function LocationPage() {
               Get Directions
             </a>
             <a
-              href={`tel:+${HOTEL_PHONE}`}
+              href="tel:+918889977988"
               className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-transparent border border-[#E5B83E]/50 hover:border-[#E5B83E] text-[#E5B83E] hover:bg-[#E5B83E]/10 font-bold text-sm uppercase tracking-widest rounded-sm transition-all duration-300 whitespace-nowrap"
             >
               <Phone className="w-4 h-4" />

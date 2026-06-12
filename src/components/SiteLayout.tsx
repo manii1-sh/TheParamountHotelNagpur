@@ -3,13 +3,13 @@ import { useState, useEffect, type ReactNode } from "react";
 import { Calendar, Menu, X } from "lucide-react";
 
 const navItems = [
-  { to: "/", label: "Home",      sectionId: "section-home"      },
-  { to: "/rooms", label: "Rooms",     sectionId: "section-rooms"     },
-  { to: "/gallery", label: "Gallery",   sectionId: "section-gallery"   },
+  { to: "/", label: "Home", sectionId: "section-home" },
+  { to: "/rooms", label: "Rooms", sectionId: "section-rooms" },
+  { to: "/gallery", label: "Gallery", sectionId: "section-gallery" },
   { to: "/amenities", label: "Amenities", sectionId: "section-amenities" },
-  { to: "/reviews", label: "Reviews",   sectionId: "section-reviews"   },
-  { to: "/location", label: "Location",  sectionId: "section-location"  },
-  { to: "/contact", label: "Contact",   sectionId: "section-contact"   },
+  { to: "/reviews", label: "Reviews", sectionId: "section-reviews" },
+  { to: "/location", label: "Location", sectionId: "section-location" },
+  { to: "/contact", label: "Contact", sectionId: "section-contact" },
 ] as const;
 
 export function SiteLayout({ children }: { children: ReactNode }) {
@@ -110,7 +110,7 @@ export function SiteLayout({ children }: { children: ReactNode }) {
           {/* Book Now Button */}
           <div className="hidden lg:block">
             <a
-              href="https://wa.me/919322520682?text=Hello%20The%20Paramount%20Hotel,%20I%20would%20like%20to%20book%20a%20stay."
+              href="https://wa.me/917057300523?text=Hello%20The%20Paramount%20Hotel,%20I%20would%20like%20to%20book%20a%20stay."
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#E5B83E] hover:bg-[#F2C953] text-[#040E21] font-bold text-xs uppercase tracking-widest rounded-sm transition-all duration-300 shadow-[0_4px_15px_rgba(229,184,62,0.25)] hover:shadow-[0_6px_20px_rgba(229,184,62,0.35)] hover:-translate-y-0.5 active:translate-y-0"
@@ -139,17 +139,16 @@ export function SiteLayout({ children }: { children: ReactNode }) {
                   key={item.to}
                   to={item.to}
                   onClick={() => setMobileMenuOpen(false)}
-                  className={`py-2 text-sm font-semibold uppercase tracking-[0.15em] hover:text-[#E5B83E] transition-colors ${
-                    isActive(item)
+                  className={`py-2 text-sm font-semibold uppercase tracking-[0.15em] hover:text-[#E5B83E] transition-colors ${isActive(item)
                       ? "text-[#E5B83E] border-l-2 border-[#E5B83E] pl-3"
                       : "text-[#FAFAFA]/80"
-                  }`}
+                    }`}
                 >
                   {item.label}
                 </Link>
               ))}
               <a
-                href="https://wa.me/919322520682?text=Hello%20The%20Paramount%20Hotel,%20I%20would%20like%20to%20book%20a%20stay."
+                href="https://wa.me/917057300523?text=Hello%20The%20Paramount%20Hotel,%20I%20would%20like%20to%20book%20a%20stay."
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => setMobileMenuOpen(false)}
@@ -182,13 +181,13 @@ export function SiteLayout({ children }: { children: ReactNode }) {
               Comfortable stays &amp; trusted hospitality in the heart of Nagpur.
             </p>
             <div className="flex items-center gap-2 pt-1">
-              <a href="https://wa.me/919322520682" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"
+              <a href="https://wa.me/917057300523" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"
                 className="w-7 h-7 rounded-full border border-white/15 hover:border-[#25D366]/60 bg-white/5 hover:bg-[#25D366]/10 flex items-center justify-center transition-all duration-300">
-                <svg className="w-3 h-3 fill-[#25D366]" viewBox="0 0 24 24"><path d="M12.012 2c-5.506 0-9.989 4.478-9.99 9.984a9.96 9.96 0 0 0 1.333 4.993L2 22l5.233-1.371a9.936 9.936 0 0 0 4.777 1.224h.005c5.507 0 9.99-4.478 9.99-9.986 0-2.67-1.037-5.178-2.92-7.062A9.925 9.925 0 0 0 12.012 2zm5.72 14.12c-.244.688-1.22 1.253-1.68 1.302-.459.049-.902.247-2.906-.578-2.56-1.056-4.212-3.67-4.34-3.841-.127-.171-1.039-1.382-1.039-2.637 0-1.255.656-1.872.888-2.122.233-.25.508-.313.678-.313.17 0 .34.002.489.008.156.007.364-.06.57.452.212.525.72 1.756.784 1.887.064.13.106.282.021.452-.085.17-.127.282-.254.43-.127.148-.268.328-.381.442-.127.128-.26.268-.112.523.148.253.659 1.084 1.417 1.76.974.87 1.794 1.139 2.049 1.267.255.127.403.106.551-.064.149-.17.637-.743.807-.998.17-.255.339-.213.57-.128.233.085 1.484.7 1.738.828.254.128.424.191.488.301.064.111.064.644-.18 1.332z"/></svg>
+                <svg className="w-3 h-3 fill-[#25D366]" viewBox="0 0 24 24"><path d="M12.012 2c-5.506 0-9.989 4.478-9.99 9.984a9.96 9.96 0 0 0 1.333 4.993L2 22l5.233-1.371a9.936 9.936 0 0 0 4.777 1.224h.005c5.507 0 9.99-4.478 9.99-9.986 0-2.67-1.037-5.178-2.92-7.062A9.925 9.925 0 0 0 12.012 2zm5.72 14.12c-.244.688-1.22 1.253-1.68 1.302-.459.049-.902.247-2.906-.578-2.56-1.056-4.212-3.67-4.34-3.841-.127-.171-1.039-1.382-1.039-2.637 0-1.255.656-1.872.888-2.122.233-.25.508-.313.678-.313.17 0 .34.002.489.008.156.007.364-.06.57.452.212.525.72 1.756.784 1.887.064.13.106.282.021.452-.085.17-.127.282-.254.43-.127.148-.268.328-.381.442-.127.128-.26.268-.112.523.148.253.659 1.084 1.417 1.76.974.87 1.794 1.139 2.049 1.267.255.127.403.106.551-.064.149-.17.637-.743.807-.998.17-.255.339-.213.57-.128.233.085 1.484.7 1.738.828.254.128.424.191.488.301.064.111.064.644-.18 1.332z" /></svg>
               </a>
               <a href="https://www.instagram.com/the_paramount_hotel_ngp/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"
                 className="w-7 h-7 rounded-full border border-white/15 hover:border-pink-400/50 bg-white/5 hover:bg-pink-500/10 flex items-center justify-center transition-all duration-300">
-                <svg className="w-3 h-3 fill-white/60" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                <svg className="w-3 h-3 fill-white/60" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" /></svg>
               </a>
             </div>
           </div>
@@ -221,7 +220,19 @@ export function SiteLayout({ children }: { children: ReactNode }) {
             <div className="w-6 h-px bg-[#E5B83E]/40"></div>
             <ul className="space-y-2 text-xs text-white/45">
               <li>📍 Plot No. 30, Beltarodi Road, Manish Nagar, Besa, Nagpur</li>
-              <li><a href="tel:+919322520682" className="hover:text-[#E5B83E] transition-colors">📞 +91 93225 20682</a></li>
+              <li>
+                <a href="tel:+918889977988" className="hover:text-[#E5B83E] transition-colors inline-flex items-center gap-1.5">
+                  📞 <span>+91 88899 77988</span> <span className="text-[10px] text-white/30 font-sans">(Call Reception)</span>
+                </a>
+              </li>
+              <li>
+                <a href="https://wa.me/917057300523" target="_blank" rel="noopener noreferrer" className="hover:text-[#E5B83E] transition-colors inline-flex items-center gap-1.5">
+                  <svg className="w-3 h-3 fill-[#25D366] inline" viewBox="0 0 24 24">
+                    <path d="M12.012 2c-5.506 0-9.989 4.478-9.99 9.984a9.96 9.96 0 0 0 1.333 4.993L2 22l5.233-1.371a9.936 9.936 0 0 0 4.777 1.224h.005c5.507 0 9.99-4.478 9.99-9.986 0-2.67-1.037-5.178-2.92-7.062A9.925 9.925 0 0 0 12.012 2zm5.72 14.12c-.244.688-1.22 1.253-1.68 1.302-.459.049-.902.247-2.906-.578-2.56-1.056-4.212-3.67-4.34-3.841-.127-.171-1.039-1.382-1.039-2.637 0-1.255.656-1.872.888-2.122.233-.25.508-.313.678-.313.17 0 .34.002.489.008.156.007.364-.06.57.452.212.525.72 1.756.784 1.887.064.13.106.282.021.452-.085.17-.127.282-.254.43-.127.148-.268.328-.381.442-.127.128-.26.268-.112.523.148.253.659 1.084 1.417 1.76.974.87 1.794 1.139 2.049 1.267.255.127.403.106.551-.064.149-.17.637-.743.807-.998.17-.255.339-.213.57-.128.233.085 1.484.7 1.738.828.254.128.424.191.488.301.064.111.064.644-.18 1.332z" />
+                  </svg>
+                  <span>+91 70573 00523</span> <span className="text-[10px] text-white/35 font-sans">(WhatsApp)</span>
+                </a>
+              </li>
               <li>🕐 Check-in 12 PM · Check-out 11 AM</li>
               <li>⭐ 4.0 · 178+ Google Reviews</li>
             </ul>

@@ -117,11 +117,10 @@ function ConciergePanel({ onClose }: { onClose: () => void }) {
           return (
             <div
               key={i}
-              className={`rounded-sm border transition-all duration-200 overflow-hidden ${
-                isOpen
+              className={`rounded-sm border transition-all duration-200 overflow-hidden ${isOpen
                   ? "border-[#E5B83E]/50 bg-[#040E21]"
                   : "border-gray-200 bg-white hover:border-[#E5B83E]/40"
-              }`}
+                }`}
             >
               {/* Question row */}
               <button
@@ -129,16 +128,14 @@ function ConciergePanel({ onClose }: { onClose: () => void }) {
                 className="w-full text-left px-3 py-2.5 flex items-center justify-between gap-2 cursor-pointer"
               >
                 <span
-                  className={`font-sans font-semibold text-xs leading-snug ${
-                    isOpen ? "text-[#E5B83E]" : "text-[#040E21]"
-                  }`}
+                  className={`font-sans font-semibold text-xs leading-snug ${isOpen ? "text-[#E5B83E]" : "text-[#040E21]"
+                    }`}
                 >
                   {faq.q}
                 </span>
                 <ChevronDown
-                  className={`w-3.5 h-3.5 shrink-0 transition-transform duration-200 ${
-                    isOpen ? "rotate-180 text-[#E5B83E]" : "text-[#040E21]/40"
-                  }`}
+                  className={`w-3.5 h-3.5 shrink-0 transition-transform duration-200 ${isOpen ? "rotate-180 text-[#E5B83E]" : "text-[#040E21]/40"
+                    }`}
                 />
               </button>
 
@@ -160,7 +157,7 @@ function ConciergePanel({ onClose }: { onClose: () => void }) {
         <p className="text-[10px] text-[#040E21]/40 font-sans text-center">
           More questions?{" "}
           <a
-            href={`tel:+919322520682`}
+            href="tel:+918889977988"
             className="text-[#E5B83E] font-bold hover:underline"
           >
             Call Reception
@@ -422,9 +419,8 @@ Please share available room options.`;
 
               {/* Collapsible form body */}
               <div
-                className={`overflow-hidden transition-all duration-500 ease-in-out ${
-                  isDrawerOpen ? "max-h-[600px] opacity-100 mt-2" : "max-h-0 opacity-0"
-                }`}
+                className={`overflow-hidden transition-all duration-500 ease-in-out ${isDrawerOpen ? "max-h-[600px] opacity-100 mt-2" : "max-h-0 opacity-0"
+                  }`}
               >
                 <div className="bg-[#040E21] border border-[#E5B83E]/30 border-t-0 rounded-b-2xl px-6 pb-6 pt-4 space-y-4 shadow-[0_20px_50px_rgba(0,0,0,0.45)]">
                   {validationError && (

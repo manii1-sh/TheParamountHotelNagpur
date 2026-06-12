@@ -85,7 +85,7 @@ function ContactPage() {
 
             {/* Call */}
             <a
-              href="tel:+919322520682"
+              href="tel:+918889977988"
               className="group w-full sm:w-auto inline-flex items-center justify-center gap-3 px-8 py-4 bg-white/5 border border-[#E5B83E]/20 hover:border-[#E5B83E]/60 hover:bg-[#E5B83E]/8 rounded-sm transition-all duration-300 hover:shadow-[0_0_25px_rgba(229,184,62,0.1)]"
             >
               <div className="w-8 h-8 rounded-full border border-[#E5B83E]/30 flex items-center justify-center group-hover:border-[#E5B83E]/60 transition-colors shrink-0">
@@ -93,7 +93,7 @@ function ContactPage() {
               </div>
               <div className="text-left">
                 <p className="font-serif font-bold text-white text-sm tracking-wide">Call Reception</p>
-                <p className="text-[11px] text-white/40 font-sans">+91 93225 20682</p>
+                <p className="text-[11px] text-white/40 font-sans">+91 88899 77988</p>
               </div>
               <span className="w-2 h-2 rounded-full bg-[#E5B83E] shadow-[0_0_6px_#E5B83E] ml-1 shrink-0"></span>
             </a>
@@ -322,7 +322,7 @@ export function ContactSection() {
 
           <div className="flex flex-col gap-3">
             <a
-              href="tel:+919322520682"
+              href="tel:+918889977988"
               className="group inline-flex items-center gap-4 px-6 py-4 bg-white/5 border border-[#E5B83E]/20 hover:border-[#E5B83E]/60 hover:bg-[#E5B83E]/8 rounded-sm transition-all duration-300"
             >
               <div className="w-9 h-9 rounded-full border border-[#E5B83E]/30 flex items-center justify-center shrink-0">
@@ -330,7 +330,7 @@ export function ContactSection() {
               </div>
               <div>
                 <p className="font-serif font-bold text-white text-sm">Call Reception</p>
-                <p className="text-[11px] text-white/40 font-sans">+91 93225 20682 · 24/7</p>
+                <p className="text-[11px] text-white/40 font-sans">+91 88899 77988 · 24/7</p>
               </div>
               <span className="w-2 h-2 rounded-full bg-[#E5B83E] shadow-[0_0_5px_#E5B83E] ml-auto shrink-0"></span>
             </a>

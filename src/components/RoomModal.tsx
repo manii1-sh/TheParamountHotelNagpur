@@ -16,7 +16,7 @@ export type RoomData = {
 };
 
 // ─── Shared pricing & room data ───────────────────────────────────────────────
-export const HOTEL_PHONE = "919322520682";
+export const HOTEL_PHONE = "917057300523";
 
 export const DELUXE_PRICING: PricingSlot[] = [
   { label: "6 Hours", duration: "Half day · 6 hrs", price: 999 },
@@ -397,49 +397,43 @@ Please confirm availability.`;
                   <div
                     key={i}
                     onClick={() => setSelectedSlot(i)}
-                    className={`flex items-center justify-between rounded-xl px-4 py-3.5 border cursor-pointer transition-all duration-200 ${
-                      isSelected
+                    className={`flex items-center justify-between rounded-xl px-4 py-3.5 border cursor-pointer transition-all duration-200 ${isSelected
                         ? "bg-[#040E21] border-[#E5B83E]/50 shadow-[0_4px_20px_rgba(4,14,33,0.2)]"
                         : "bg-white border-gray-100 hover:border-[#E5B83E]/40 hover:shadow-sm"
-                    }`}
+                      }`}
                   >
                     <div>
                       <div className="flex items-center gap-2">
                         <p
-                          className={`font-serif font-bold text-base leading-tight ${
-                            isSelected ? "text-[#E5B83E]" : "text-[#040E21]"
-                          }`}
+                          className={`font-serif font-bold text-base leading-tight ${isSelected ? "text-[#E5B83E]" : "text-[#040E21]"
+                            }`}
                         >
                           {slot.label}
                         </p>
                         {room.title === "Premium Room" && (slot.label === "6 Hours" || slot.label === "Full Day") && (
-                          <span className={`text-[9px] font-bold uppercase px-1.5 py-0.5 rounded tracking-wider flex items-center gap-0.5 border ${
-                            isSelected 
-                              ? "bg-amber-500/20 text-[#E5B83E] border-amber-500/30" 
+                          <span className={`text-[9px] font-bold uppercase px-1.5 py-0.5 rounded tracking-wider flex items-center gap-0.5 border ${isSelected
+                              ? "bg-amber-500/20 text-[#E5B83E] border-amber-500/30"
                               : "bg-amber-500/10 text-amber-700 border-amber-500/20"
-                          }`}>
+                            }`}>
                             🍕 2 Free Pizzas
                           </span>
                         )}
                       </div>
                       <p
-                        className={`text-[11px] font-sans mt-0.5 ${
-                          isSelected ? "text-white/50" : "text-[#040E21]/45"
-                        }`}
+                        className={`text-[11px] font-sans mt-0.5 ${isSelected ? "text-white/50" : "text-[#040E21]/45"
+                          }`}
                       >
                         {slot.duration}
                       </p>
                     </div>
                     <div className="flex items-center gap-3">
                       <div
-                        className={`flex items-baseline gap-px ${
-                          isSelected ? "text-white" : "text-[#040E21]"
-                        }`}
+                        className={`flex items-baseline gap-px ${isSelected ? "text-white" : "text-[#040E21]"
+                          }`}
                       >
                         <span
-                          className={`text-sm font-bold leading-none ${
-                            isSelected ? "text-[#E5B83E]" : "text-[#040E21]/60"
-                          }`}
+                          className={`text-sm font-bold leading-none ${isSelected ? "text-[#E5B83E]" : "text-[#040E21]/60"
+                            }`}
                         >
                           ₹
                         </span>
@@ -749,9 +743,8 @@ export function RoomPreviewModal({
                 <button
                   key={idx}
                   onClick={() => setActiveIndex(idx)}
-                  className={`w-14 h-10 md:w-16 md:h-12 rounded-md overflow-hidden shrink-0 border-2 transition-all cursor-pointer ${
-                    isActive ? "border-[#E5B83E] scale-105" : "border-transparent opacity-40 hover:opacity-80"
-                  }`}
+                  className={`w-14 h-10 md:w-16 md:h-12 rounded-md overflow-hidden shrink-0 border-2 transition-all cursor-pointer ${isActive ? "border-[#E5B83E] scale-105" : "border-transparent opacity-40 hover:opacity-80"
+                    }`}
                 >
                   <img src={img} alt="Thumbnail" className="w-full h-full object-cover" />
                 </button>
