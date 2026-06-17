@@ -462,9 +462,15 @@ Please confirm availability.`;
             </div>
           </div>
 
-          <p className="text-center text-[10px] text-[#040E21]/40 font-sans pb-1">
-            Prices are per room · Taxes included · Instant WhatsApp confirmation
-          </p>
+          <div className="space-y-1.5 pb-1">
+            <p className="text-center text-[10px] text-[#040E21]/40 font-sans">
+              Prices are per room · Taxes included · Instant WhatsApp confirmation
+            </p>
+            <div className="flex items-center justify-center gap-1.5 text-[10px] text-amber-700 font-sans font-medium bg-amber-50 border border-amber-200 rounded-lg px-3 py-2">
+              <span className="select-none">⚠️</span>
+              <span><strong>Note:</strong> Booking confirmed only after advance payment.</span>
+            </div>
+          </div>
         </div>
 
         {/* Quick Booking Popup Overlay inside the Modal */}
@@ -616,7 +622,15 @@ Please confirm availability.`;
                   )}
                 </div>
 
-                <div className="flex gap-2.5 pt-2">
+                {/* Advance payment notice */}
+                <div className="flex items-start gap-2 p-2.5 bg-amber-50 border border-amber-200 rounded-lg">
+                  <span className="text-amber-500 text-sm leading-none mt-px select-none">⚠️</span>
+                  <p className="text-[11px] text-amber-800 font-sans font-medium leading-snug">
+                    <strong>Note:</strong> Booking will be confirmed only after advance payment is received.
+                  </p>
+                </div>
+
+                <div className="flex gap-2.5 pt-1">
                   <button
                     type="button"
                     onClick={() => setActiveBookingSlot(null)}

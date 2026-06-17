@@ -583,9 +583,15 @@ Please share available room options.`;
                       Send WhatsApp Request
                     </button>
 
-                    <div className="flex items-center justify-center gap-1 pt-0.5 text-[#040E21]/60 font-sans font-semibold text-[10px] select-none">
-                      <ShieldCheck className="w-3.5 h-3.5 shrink-0" />
-                      <span>We'll confirm your booking on WhatsApp</span>
+                    <div className="space-y-2 mt-1">
+                      <div className="flex items-center justify-center gap-1 text-[#040E21]/60 font-sans font-semibold text-[10px] select-none">
+                        <ShieldCheck className="w-3.5 h-3.5 shrink-0" />
+                        <span>We'll confirm your booking on WhatsApp</span>
+                      </div>
+                      <div className="flex items-center justify-center gap-1.5 text-[10px] text-amber-700 font-sans font-medium bg-amber-50 border border-amber-200 rounded-lg px-3 py-2">
+                        <span className="select-none">⚠️</span>
+                        <span><strong>Note:</strong> Booking confirmed only after advance payment.</span>
+                      </div>
                     </div>
                   </form>
                 </div>
@@ -953,9 +959,15 @@ Please share available room options.`;
               </button>
 
               {/* Footnote */}
-              <div className="flex items-center justify-center gap-1 pt-0.5 text-[#040E21]/60 font-sans font-semibold text-[10px] select-none">
-                <ShieldCheck className="w-3.5 h-3.5 text-[#040E21]/60 shrink-0" />
-                <span>We'll confirm your booking on WhatsApp</span>
+              <div className="space-y-2 pt-0.5">
+                <div className="flex items-center justify-center gap-1 text-[#040E21]/60 font-sans font-semibold text-[10px] select-none">
+                  <ShieldCheck className="w-3.5 h-3.5 text-[#040E21]/60 shrink-0" />
+                  <span>We'll confirm your booking on WhatsApp</span>
+                </div>
+                <div className="flex items-center justify-center gap-1.5 text-[10px] text-amber-700 font-sans font-medium bg-amber-50 border border-amber-200 rounded-lg px-3 py-2">
+                  <span className="select-none">⚠️</span>
+                  <span><strong>Note:</strong> Booking confirmed only after advance payment.</span>
+                </div>
               </div>
             </form>
           </div>
