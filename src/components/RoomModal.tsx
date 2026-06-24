@@ -27,7 +27,7 @@ export const DELUXE_PRICING: PricingSlot[] = [
 export const SUPER_DELUXE_PRICING: PricingSlot[] = [
   { label: "6 Hours", duration: "Half day · 6 hrs", price: 1199 },
   { label: "12 Hours", duration: "Day use · 12 hrs", price: 1499 },
-  { label: "Full Day", duration: "Overnight · 12 PM to 11 AM", price: 1699 },
+  { label: "Full Day", duration: "Overnight · 12 PM to 11 AM", price: 1799 },
 ];
 
 export const PREMIUM_PRICING: PricingSlot[] = [
